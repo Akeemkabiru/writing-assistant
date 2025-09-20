@@ -35,7 +35,10 @@ export default function Home() {
               setResponseText={setResponseText}
               currentMode={currentMode}
             />
-            <ResponseText responseText={responseText} />
+            <ResponseText
+              currentMode={currentMode}
+              responseText={responseText}
+            />
           </div>
         </div>
       </div>

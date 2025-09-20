@@ -66,7 +66,10 @@ export default function Textbox({
         </div>
         <div className="flex items-center gap-2 rounded-xl border border-gray-300 py-1 px-2">
           <Image
-            onClick={() => setInput("")}
+            onClick={() => {
+              setInput("");
+              setResponseText("");
+            }}
             src="/reset.svg"
             alt="darkmode-icon"
             width={22}
