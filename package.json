@@ -9,11 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^1.20.0",
     "axios": "^1.12.2",
+    "motion": "^12.23.16",
     "next": "15.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-icon": "^1.0.0"
+    "react-icon": "^1.0.0",
+    "react-toast": "^1.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

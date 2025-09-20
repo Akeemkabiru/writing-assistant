@@ -1,75 +1,49 @@
-import axios from "axios";
+import { GoogleGenAI } from "@google/genai";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toast";
 
-export default function Textbox({ currentMode }: { currentMode: string }) {
+export default function Textbox({
+  currentMode,
+  setResponseText,
+}: {
+  currentMode: string;
+  setResponseText: (text: string) => void;
+}) {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState("");
   const [input, setInput] = useState("");
 
-  console.log(process.env.NEXT_HF_API_KEY);
+  const modeText =
+    currentMode === "Rephrase"
+      ? "Rephrase this:"
+      : currentMode === "Expand"
+      ? "Expand this text:"
+      : "Summarize this text:";
 
-  const query = async (model, input) => {
-    const response = await axios.post(
-      `https://api-inference.huggingface.co/models/${model}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_HF_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ inputs: input }), // ✅ use "inputs"
+  const ai = new GoogleGenAI({
+    apiKey: "AIzaSyD8LILj-QfoNopgAxXN-2gInbMJynaKBYc",
+  });
+
+  async function handleSubmit() {
+    setLoading(true);
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: `${modeText} ${input}`,
+      });
+      const text = response.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+      setResponseText(text);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred.");
       }
-    );
-    return response.data;
-  };
-
-  const handleSummarize = async () => {
-    setLoading(true);
-    setResult("");
-    try {
-      const data = await query("Falconsai/text_summarization", input);
-      setResult(data[0]?.summary_text || "No summary generated.");
-    } catch (err: any) {
-      setResult(err.message);
+      throw error;
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleRephrase = async () => {
-    setLoading(true);
-    setResult("");
-    try {
-      const data = await query(
-        "Vamsi/T5_Paraphrase_Paws",
-        `Rephrase this: ${input}`
-      );
-      setResult(data[0]?.generated_text || "No rephrase generated.");
-    } catch (err: any) {
-      setResult(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleExpand = async () => {
-    setLoading(true);
-    setResult("");
-    try {
-      const data = await query(
-        "google/flan-t5-small",
-        `Expand this text: ${input}`
-      );
-      setResult(data[0]?.generated_text || "No expansion generated.");
-    } catch (err: any) {
-      setResult("⚠️ Error: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  console.log(result);
+  }
 
   return (
     <div className="rounded-2xl border shadow p-4 border-gray-300  space-y-2 flex-1">
@@ -92,7 +66,7 @@ export default function Textbox({ currentMode }: { currentMode: string }) {
         </div>
         <div className="flex items-center gap-2 rounded-xl border border-gray-300 py-1 px-2">
           <Image src="/reset.svg" alt="darkmode-icon" width={22} height={22} />
-          <p>Reset</p>
+          <p className="">Reset</p>
         </div>
       </div>
       <textarea
@@ -103,10 +77,21 @@ export default function Textbox({ currentMode }: { currentMode: string }) {
         className="w-full border border-gray-300 rounded-2xl p-3"
       />
       <button
-        onClick={() => handleSummarize()}
-        className="w-full hover:scale-102 transition-all duration-300 bg-black text-center text-white py-2 rounded-lg font-medium cursor-pointer"
+        onClick={() => handleSubmit()}
+        className="w-full hover:scale-102 flex items-center justify-center transition-all duration-300 bg-black text-center text-white py-2 rounded-lg font-medium cursor-pointer"
       >
-        {`${currentMode} Text`}
+        {loading ? (
+          <Image
+            src="/loading.svg"
+            alt="loading-icon"
+            width={22}
+            height={22}
+            className="text-white"
+            color="white"
+          />
+        ) : (
+          `${currentMode} Text`
+        )}
       </button>
     </div>
   );
