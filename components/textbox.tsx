@@ -12,6 +12,17 @@ export default function Textbox({
 }) {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
+  const [spinning, setSpinning] = useState(false);
+
+  const handleReset = () => {
+    setSpinning(true);
+    setInput("");
+    setResponseText("");
+
+    setTimeout(() => {
+      setSpinning(false);
+    }, 500);
+  };
 
   const modeText =
     currentMode === "Rephrase"
@@ -66,16 +77,14 @@ export default function Textbox({
         </div>
         <div className="flex items-center gap-2 rounded-xl border border-gray-300 py-1 px-2">
           <Image
-            onClick={() => {
-              setInput("");
-              setResponseText("");
-            }}
+            onClick={() => handleReset()}
             src="/reset.svg"
-            alt="darkmode-icon"
+            alt="reset-icon"
             width={22}
             height={22}
-            className="cursor-pointer"
+            className={`${spinning ? "animate-spin" : ""} cursor-pointer`}
           />
+
           <p className="">Reset</p>
         </div>
       </div>
@@ -89,6 +98,7 @@ export default function Textbox({
       <button
         onClick={() => handleSubmit()}
         className="w-full hover:scale-102 flex items-center justify-center transition-all duration-300 bg-black text-center text-white py-2 rounded-lg font-medium cursor-pointer"
+        disabled={loading}
       >
         {loading ? (
           <Image
@@ -96,8 +106,9 @@ export default function Textbox({
             alt="loading-icon"
             width={22}
             height={22}
-            className="text-white"
-            color="white"
+            className={`cursor-pointer transition-all duration-500 ${
+              loading ? "animate-spin" : ""
+            }`}
           />
         ) : (
           `${currentMode} Text`
