@@ -3,7 +3,7 @@ import React from "react";
 
 export default function ResponseText() {
   return (
-    <div className="rounded-2xl border-2 p-4 border-gray-300  space-y-2">
+    <div className="rounded-2xl border shadow p-4 border-gray-300  space-y-2">
       <div>
         <div className="flex items-center justify-between my-4">
           <p className="font-semibold">Contents</p>
@@ -12,7 +12,7 @@ export default function ResponseText() {
             <p className="text-sm">Copy</p>
           </div>
         </div>
-        <div>
+        <div className="hyphens-auto text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde tempore
           libero facilis asperiores itaque labore vitae laboriosam dolore at
           recusandae ullam animi eum, ipsa odio quis distinctio tenetur beatae
