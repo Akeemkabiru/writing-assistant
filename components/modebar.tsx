@@ -1,4 +1,5 @@
 import { MODE_ITEMS } from "@/constants";
+import Image from "next/image";
 
 export default function ModeBar() {
   return (
@@ -8,10 +9,13 @@ export default function ModeBar() {
           return (
             <div
               key={index}
-              className="rounded-2xl border-2 px-2 py-4 border-gray-300 opacity-50 space-y-2"
+              className="rounded-2xl border-2 px-2 py-4 border-gray-300  space-y-2"
             >
               <div className="flex items-center justify-between">
-                <p>{title}</p>
+                <div className="flex items-center gap-2">
+                  <Image src={icon} alt="" width={24} height={24} />
+                  <p className="font-medium">{title}</p>
+                </div>
                 <div>
                   <p>Active</p>
                 </div>
