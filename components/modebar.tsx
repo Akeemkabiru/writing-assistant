@@ -25,12 +25,12 @@ export default function ModeBar({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Image src={icon} alt="" width={24} height={24} />
-                  <p className="font-medium">{title}</p>
+                  <p className="font-semibold">{title}</p>
                 </div>
 
-                {isActive && <p>Active</p>}
+                {isActive && <p className="font-medium text-xs">Active</p>}
               </div>
-              <p className="text-sm">{text}</p>
+              <p className="text-sm text-gray-600">{text}</p>
             </div>
           );
         })}
