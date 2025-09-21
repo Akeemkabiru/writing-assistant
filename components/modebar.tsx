@@ -17,8 +17,8 @@ export default function ModeBar({
           return (
             <div
               key={index}
-              className={`rounded-2xl border shadow px-2 py-4 border-gray-300 transition-all duration-300  space-y-2 cursor-pointer hover:scale-105 ${
-                isActive ? "" : ""
+              className={`rounded-2xl shadow px-2 py-4  transition-all duration-300  space-y-2 cursor-pointer hover:scale-105 ${
+                isActive ? "border-black border-2" : "border-gray-300 border"
               }`}
               onClick={() => setCurrentMode(title)}
             >
@@ -28,7 +28,11 @@ export default function ModeBar({
                   <p className="font-semibold">{title}</p>
                 </div>
 
-                {isActive && <p className="font-medium text-xs">Active</p>}
+                {isActive && (
+                  <p className="text-xs bg-black rounded-2xl text-white px-1 font-semibold">
+                    Active
+                  </p>
+                )}
               </div>
               <p className="text-sm text-gray-600">{text}</p>
             </div>
