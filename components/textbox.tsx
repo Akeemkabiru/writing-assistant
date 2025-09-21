@@ -1,18 +1,14 @@
+import useAssistantStore from "@/store";
 import { GoogleGenAI } from "@google/genai";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import { toast } from "react-toast";
+import toast from "react-hot-toast";
 
-export default function Textbox({
-  currentMode,
-  setResponseText,
-}: {
-  currentMode: string;
-  setResponseText: (text: string) => void;
-}) {
-  const [loading, setLoading] = useState(false);
+export default function Textbox() {
   const [input, setInput] = useState("");
   const [spinning, setSpinning] = useState(false);
+  const { currentMode, setResponseText } = useAssistantStore();
 
   const handleReset = () => {
     setSpinning(true);
@@ -35,26 +31,16 @@ export default function Textbox({
     apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
   });
 
-  async function handleSubmit() {
-    setLoading(true);
-    try {
-      const response = await ai.models.generateContent({
+  const { mutate, isPending } = useMutation({
+    mutationFn: () =>
+      ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: `${modeText} ${input}`,
-      });
-      const text = response.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-      setResponseText(text);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("An unknown error occurred.");
-      }
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  }
+      }),
+    onSuccess: (data) =>
+      setResponseText(data?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""),
+    onError: (error) => toast.error(error.message),
+  });
 
   return (
     <div className="rounded-2xl border shadow p-4 border-gray-300  space-y-2 flex-1">
@@ -93,21 +79,21 @@ export default function Textbox({
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter your text to rephrase"
         rows={7}
-        className="w-full border border-gray-300 rounded-2xl p-3"
+        className="w-full border border-gray-300 rounded-2xl p-3 focus:outline-black"
       />
       <button
-        onClick={() => handleSubmit()}
+        onClick={() => mutate()}
         className="w-full hover:scale-102 flex items-center justify-center transition-all duration-300 bg-black text-center text-white py-2 rounded-lg font-medium cursor-pointer"
-        disabled={loading}
+        disabled={isPending}
       >
-        {loading ? (
+        {isPending ? (
           <Image
             src="/loading.svg"
             alt="loading-icon"
             width={22}
             height={22}
             className={`cursor-pointer transition-all duration-500 ${
-              loading ? "animate-spin" : ""
+              isPending ? "animate-spin" : ""
             }`}
           />
         ) : (

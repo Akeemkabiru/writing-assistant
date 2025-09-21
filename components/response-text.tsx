@@ -1,25 +1,13 @@
+import useAssistantStore from "@/store";
+import { handleClipboard } from "@/utils/helpers";
 import Image from "next/image";
 import React from "react";
-import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 
-export default function ResponseText({
-  responseText,
-  currentMode,
-}: {
-  responseText: string;
-  currentMode: string;
-}) {
-  if (!responseText) return null;
+export default function ResponseText() {
+  const { responseText, currentMode } = useAssistantStore();
 
-  async function handleClipboard() {
-    try {
-      await navigator.clipboard.writeText(responseText);
-      toast.success("Response copied");
-    } catch (error) {
-      toast.error("Failed to copy: " + error);
-    }
-  }
+  if (!responseText) return null;
 
   const modeResult =
     currentMode === "Rephrase"
@@ -36,7 +24,7 @@ export default function ResponseText({
         <div className="flex items-center justify-between my-4">
           <p className="font-semibold">{modeResult} Contents</p>
           <div
-            onClick={() => handleClipboard()}
+            onClick={() => handleClipboard(responseText)}
             className="flex items-center gap-2 rounded-xl border border-gray-300 py-1 px-2 cursor-pointer"
           >
             <Image src="/copy.svg" alt="copy-icon" width={22} height={22} />

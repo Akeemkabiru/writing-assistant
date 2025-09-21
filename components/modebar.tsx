@@ -1,13 +1,10 @@
 import { MODE_ITEMS } from "@/constants";
+import useAssistantStore from "@/store";
 import Image from "next/image";
 
-export default function ModeBar({
-  currentMode,
-  setCurrentMode,
-}: {
-  currentMode: string;
-  setCurrentMode: (title: string) => void;
-}) {
+export default function ModeBar() {
+  const { currentMode, setCurrentMode } = useAssistantStore();
+
   return (
     <div>
       <div className="h-full over lg:w-xs w-full  space-y-3">

@@ -8,8 +8,6 @@ import { useState } from "react";
 
 export default function Home() {
   const [isDarkmode, setIsDarkMode] = useState(false);
-  const [currentMode, setCurrentMode] = useState("Rephrase");
-  const [responseText, setResponseText] = useState("");
 
   return (
     <main className="w-full h-full">
@@ -29,16 +27,10 @@ export default function Home() {
       </div>
       <div className="flex  w-full h-full items-center justify-center p-6">
         <div className="w-6xl py-16 flex lg:flex-row flex-col gap-6 lg:mt-16 md:mt-12 mt-8">
-          <ModeBar currentMode={currentMode} setCurrentMode={setCurrentMode} />
+          <ModeBar />
           <div className="lg:flex-1 flex flex-col w-full gap-6 ">
-            <Textbox
-              setResponseText={setResponseText}
-              currentMode={currentMode}
-            />
-            <ResponseText
-              currentMode={currentMode}
-              responseText={responseText}
-            />
+            <Textbox />
+            <ResponseText />
           </div>
         </div>
       </div>
