@@ -32,7 +32,7 @@ export default function Textbox({
       : "Summarize this text:";
 
   const ai = new GoogleGenAI({
-    apiKey: "AIzaSyD8LILj-QfoNopgAxXN-2gInbMJynaKBYc",
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
   });
 
   async function handleSubmit() {

@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="w-full h-full">
-      <div className="flex items-center justify-between px-8 py-6 border fixed w-full border-gray-300 bg-white z-10">
+      <div className="flex items-center justify-between px-8 py-6 fixed w-full  bg-white/10 backdrop-blur-sm border border-white/10 shadow z-10">
         <h2>Writing assistant</h2>
         <div
           onClick={() => setIsDarkMode((prev) => !prev)}

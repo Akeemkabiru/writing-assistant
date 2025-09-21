@@ -18,7 +18,8 @@
     "react-hot-toast": "^2.6.0",
     "react-icon": "^1.0.0",
     "react-markdown": "^10.1.0",
-    "react-toast": "^1.0.3"
+    "react-toast": "^1.0.3",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
