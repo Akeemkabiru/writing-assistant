@@ -1,3 +1,4 @@
+import { MODE } from "@/types/enums";
 import { create } from "zustand";
 
 interface IStore {
@@ -8,7 +9,7 @@ interface IStore {
 }
 
 const useAssistantStore = create<IStore>((set) => ({
-  currentMode: "Rephrase",
+  currentMode: MODE.Rephrase,
   responseText: "",
   setCurrentMode: (mode: string) =>
     set(() => ({

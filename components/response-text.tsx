@@ -1,4 +1,5 @@
 import useAssistantStore from "@/store";
+import { MODE } from "@/types/enums";
 import { handleClipboard } from "@/utils/helpers";
 import Image from "next/image";
 import React from "react";
@@ -10,11 +11,11 @@ export default function ResponseText() {
   if (!responseText) return null;
 
   const modeResult =
-    currentMode === "Rephrase"
+    currentMode === MODE.Rephrase
       ? "Rephrased"
-      : currentMode === "Summarize"
+      : currentMode === MODE.Summarized
       ? "Summarized"
-      : currentMode === "Expand"
+      : currentMode === MODE.Expand
       ? "Expanded"
       : "";
 

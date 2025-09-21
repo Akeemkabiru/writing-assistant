@@ -12,7 +12,16 @@ export default function Home() {
   return (
     <main className="w-full h-full">
       <div className="flex items-center justify-between px-8 py-6 fixed w-full  bg-white/10 backdrop-blur-sm border border-white/10 shadow z-10">
-        <h2>Writing assistant</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="font-semibold">WriteAI</h2>
+          <Image
+            className="animate-bounce"
+            src="/logo.svg"
+            alt="pen-icon"
+            width={22}
+            height={22}
+          />
+        </div>
         <div
           onClick={() => setIsDarkMode((prev) => !prev)}
           className="border p-1.5 rounded-lg  border-gray-300 cursor-pointer"

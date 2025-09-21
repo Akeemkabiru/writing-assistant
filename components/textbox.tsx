@@ -1,14 +1,13 @@
+import useGenerateResponse from "@/hooks/useGenerateResponse";
 import useAssistantStore from "@/store";
-import { GoogleGenAI } from "@google/genai";
-import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import toast from "react-hot-toast";
 
 export default function Textbox() {
   const [input, setInput] = useState("");
   const [spinning, setSpinning] = useState(false);
   const { currentMode, setResponseText } = useAssistantStore();
+  const { mutate, isPending } = useGenerateResponse(input);
 
   const handleReset = () => {
     setSpinning(true);
@@ -19,28 +18,6 @@ export default function Textbox() {
       setSpinning(false);
     }, 500);
   };
-
-  const modeText =
-    currentMode === "Rephrase"
-      ? "Rephrase this:"
-      : currentMode === "Expand"
-      ? "Expand this text:"
-      : "Summarize this text:";
-
-  const ai = new GoogleGenAI({
-    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
-  });
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: () =>
-      ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: `${modeText} ${input}`,
-      }),
-    onSuccess: (data) =>
-      setResponseText(data?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""),
-    onError: (error) => toast.error(error.message),
-  });
 
   return (
     <div className="rounded-2xl border shadow p-4 border-gray-300  space-y-2 flex-1">
