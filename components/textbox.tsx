@@ -60,8 +60,12 @@ export default function Textbox() {
       />
       <button
         onClick={() => mutate()}
-        className="w-full hover:scale-102 flex items-center justify-center transition-all duration-300 bg-black text-center text-white py-2 rounded-lg font-medium cursor-pointer"
+        className="w-full flex items-center justify-center transition-all duration-300 py-2 rounded-lg font-medium cursor-pointer bg-button-bg text-button-text"
         disabled={isPending}
+        style={{
+          backgroundColor: "var(--button-bg)",
+          color: "var(--button-text)",
+        }}
       >
         {isPending ? (
           <Image

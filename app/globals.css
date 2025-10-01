@@ -1,10 +1,22 @@
 @import "tailwindcss";
 
+/* Light mode defaults */
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  --background: #f9fafb; /* soft white */
+  --foreground: #111827; /* near-black */
+  --button-bg: #111827; /* dark button in light mode */
+  --button-text: #f9fafb;
 }
 
+/* Dark mode (manual toggle with .dark) */
+html.dark {
+  --background: #0f172a; /* deep navy-slate */
+  --foreground: #f8fafc; /* soft white */
+  --button-bg: #f8fafc; /* light button in dark mode */
+  --button-text: #0f172a; /* dark text */
+}
+
+/* Tailwind theme bindings */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,13 +24,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark mode (system preference) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f9fafb;
-    --foreground: #111827;
+    --background: #0f172a;
+    --foreground: #f8fafc;
   }
 }
 
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);

@@ -9,6 +9,11 @@ import { useState } from "react";
 export default function Home() {
   const [isDarkmode, setIsDarkMode] = useState(false);
 
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle("dark");
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
     <main className="w-full h-full">
       <div className="flex items-center justify-between px-8 py-6 fixed w-full  bg-white/10 backdrop-blur-sm border border-white/10 shadow z-10">
@@ -17,7 +22,7 @@ export default function Home() {
           <Image src="/logo.svg" alt="pen-icon" width={22} height={22} />
         </div>
         <div
-          onClick={() => setIsDarkMode((prev) => !prev)}
+          onClick={() => toggleDarkMode()}
           className="border p-1.5 rounded-lg  border-gray-300 cursor-pointer"
         >
           <Image

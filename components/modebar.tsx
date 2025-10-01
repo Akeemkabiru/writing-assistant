@@ -26,7 +26,13 @@ export default function ModeBar() {
                 </div>
 
                 {isActive && (
-                  <p className="text-xs bg-black rounded-2xl text-white px-1 font-semibold">
+                  <p
+                    className="text-xs rounded-2xl  px-1 font-semibold"
+                    style={{
+                      backgroundColor: "var(--button-bg)",
+                      color: "var(--button-text)",
+                    }}
+                  >
                     Active
                   </p>
                 )}
