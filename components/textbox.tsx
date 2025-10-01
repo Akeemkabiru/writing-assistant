@@ -61,7 +61,7 @@ export default function Textbox() {
       <button
         onClick={() => mutate()}
         className="w-full flex items-center justify-center transition-all duration-300 py-2 rounded-lg font-medium cursor-pointer bg-button-bg text-button-text"
-        disabled={isPending}
+        disabled={isPending || !input}
         style={{
           backgroundColor: "var(--button-bg)",
           color: "var(--button-text)",
